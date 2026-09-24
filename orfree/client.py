@@ -70,16 +70,28 @@ def ranked_models(refresh_hours: float = 24, timeout: int = 30, path: Path = STA
     return state["models"]
 
 
-def complete(prompt: str, *, timeout: int = 30, refresh_hours: float = 24, path: Path = STATE_PATH) -> str:
+def complete(
+    prompt: str,
+    *,
+    timeout: int = 30,
+    refresh_hours: float = 24,
+    path: Path = STATE_PATH,
+    include_metadata: bool = False,
+) -> str | dict:
     models = ranked_models(refresh_hours=refresh_hours, timeout=timeout, path=path)
-    errors = []
+    failed = []
     for model in list(models):
         ok, elapsed, detail = chat(model, prompt, timeout)
         if ok:
-            return detail
+            if not include_metadata:
+                return detail
+            return {"text": detail, "model": model, "elapsed": elapsed, "failed": failed}
         demote(models, model)
         state = load(path)
         state["models"] = models
         save(state, path)
-        errors.append(f"{model} ({elapsed:.2f}s): {detail}")
-    raise RuntimeError("all models failed:\n" + "\n".join(errors))
+        failed.append({"model": model, "elapsed": elapsed, "error": detail})
+    raise RuntimeError(
+        "all models failed:\n"
+        + "\n".join(f"{f['model']} ({f['elapsed']:.2f}s): {f['error']}" for f in failed)
+    )
