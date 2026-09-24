@@ -23,6 +23,8 @@ from orfree import complete
 print(complete("Respond with Hello World!"))
 ```
 
+
+
 ## CLI
 
 ```bash
@@ -36,3 +38,29 @@ The working list is **only** `models.yml` in this repo. This package never reads
 ```bash
 uv run pytest
 ```
+
+
+
+## Run the example
+
+Run the `example.py` do quick-test it.
+
+Example run where a model failed and was dropped     from the list.
+
+```bash
+name@laptop MINGW64 ~/Documents/code/openrouter-free (main)
+$ uv run example.py 
+Prompt:
+'Explain photosynthesis in one sentence.'
+
+⏳ sending prompt to free openrouter model...
+Answer:
+'Photosynthesis is the process by which green plants, algae, and certain bacteria convert sunlight into chemical energy, producing glucose while releasing oxygen from carbon dioxide and water.'
+
+Metadata:
+  model:   nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+  elapsed: 4.23s
+  failed:
+    - poolside/laguna-xs-2.1:free (0.65s): Provider returned error
+```
+
