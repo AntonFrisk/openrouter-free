@@ -4,7 +4,8 @@ Demo for getting access to openrouter free models and maintaining a self-healing
 
 Self-healing OpenRouter client. It keeps a ranked list of **free** text models (lowest-latency first), sends chat to the top model, and on timeout or error tries the next while demoting the failure two steps.
 
-Catalog comes from the [OpenRouter Models API](https://openrouter.ai/docs/guides/overview/models), not the website. Refresh happens at most every 24 hours.
+Catalog comes from the [OpenRouter Models API](https://openrouter.ai/docs/guides/overview/models). Refresh happens every 24 hours (to avoid double API calls on each prompt). 
+Enjoy!
 
 ## Setup
 
