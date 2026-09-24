@@ -32,7 +32,7 @@ print(complete("Respond with Hello World!"))
 uv run python -m orfree "Respond with Hello World!"
 ```
 
-The working list is **only** `models.yml` in this repo. This package never reads or writes another project's files.
+The working list is **only** `models.yml` in this repo. This list is auto-updated. 
 
 ## Tests
 
